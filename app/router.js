@@ -2,7 +2,9 @@ module.exports = function(app,passport)
 {
 	//routes for application
 	app.get('/',function(req, res){
-		res.render('index.ejs');
+		res.render('index.ejs',{
+			user : req.user
+		});
 	});
 	
 	//PROFILE (can't view without login)
@@ -10,7 +12,6 @@ module.exports = function(app,passport)
 		res.render('profile.ejs', {
 			user : req.user
 		});
-		console.log("email = "+req.user.email);
 	});
 
 	// LOGOUT
@@ -19,10 +20,16 @@ module.exports = function(app,passport)
 		res.redirect('/');
 	});
 
+	// CHECKOUT (can't view with login)
+	// show the login form
+	app.get('/checkout', isLoggedIn,function(req, res) {
+		res.render('checkout.ejs', { message: req.flash('loginMessage'),user:req.user });
+	});
+
 	// LOGIN (can't view with login)
 	// show the login form
 	app.get('/login', isNotLoggedIn,function(req, res) {
-		res.render('login.ejs', { message: req.flash('loginMessage') });
+		res.render('login.ejs', { message: req.flash('loginMessage'),user:req.user });
 	});
 
 	// process the login form
@@ -35,7 +42,7 @@ module.exports = function(app,passport)
 	// SIGNUP (can't view with login)
 	// show the signup form
 	app.get('/signup', isNotLoggedIn,function(req, res) {
-		res.render('signup.ejs', { message: req.flash('signupMessage') });
+		res.render('signup.ejs', { message: req.flash('signupMessage'),user: req.user });
 	});
 
 	// process the signup form
@@ -52,7 +59,7 @@ module.exports = function(app,passport)
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated())
 		return next();
-	res.redirect('/');
+	res.redirect('/login');
 }
 
 function isNotLoggedIn(req, res, next) {

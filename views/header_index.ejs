@@ -1,0 +1,65 @@
+<div id="templatemo_wrapper_h">
+<div id="templatemo_header_wh">
+	<div id="templatemo_header" class="header_home">
+    	<div id="site_title"><a href="/" rel="nofollow">Free CSS Templates</a></div>
+        <div id="templatemo_menu" class="ddsmoothmenu">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/products">Products</a>
+                    <ul>
+                        <li><a href="http://www.templatemo.com/page/1" rel="nofollow">Sub Page One</a></li>
+                        <li><a href="http://www.templatemo.com/page/2" rel="nofollow">Sub Page Two</a></li>
+                        <li><a href="http://www.templatemo.com/page/3" rel="nofollow">Sub Page Three</a></li>
+                        <li><a href="http://www.templatemo.com/page/4" rel="nofollow">Sub Page Four</a></li>
+                        <li><a href="http://www.templatemo.com/page/5" rel="nofollow">Sub Page Five</a></li>                        
+                  	</ul>
+                </li>
+                <li><a href="/checkout">Checkout</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/faqs">FAQs</a></li>
+	
+				<% if (user) { %>
+ 	               <li><a href="/profile">Profile</a></li>
+ 	               <li><a href="/logout">Logout</a></li>				
+				<% } %>
+                
+            </ul>
+            <div id="templatemo_search">
+                <form action="#" method="get">
+                  	<input type="text" value="Search Wine" name="keyword" id="keyword" title="keyword"
+                  			onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
+                  	<input type="submit" name="Search" value="" alt="Search" id="searchbutton" title="Search" class="sub_btn" />
+                </form>
+            </div>
+            <br style="clear: left" />
+        </div>
+        <a href="http://www.clipartlogo.com/free/nokia-c3-cliparts.html"   class="site_repeat" target="_blank"><img src="images/top_repeat.png" title="Nokia C3 Cliparts" alt="" /></a><!-- end of templatemo_menu -->
+
+        <div class="slider-wrapper theme-orman">
+            <div class="ribbon"></div>
+            <div id="slider" class="nivoSlider">
+                <img src="images/portfolio/01.jpg" alt="slider image 1" />
+                <a href="http://www.templatemo.com/page/1" rel="nofollow">
+                	<img src="images/portfolio/02.jpg" alt="slider image 2" title="This is an example of a caption" />
+                </a>
+                <img src="images/portfolio/03.jpg" alt="slider image 3" />
+                <img src="images/portfolio/04.jpg" alt="slider image 4" title="#htmlcaption" />
+                <img src="images/portfolio/05.jpg" alt="slider image 5" title="#htmlcaption" />
+            </div>
+            <div id="htmlcaption" class="nivo-html-caption">
+                <strong>Example</strong> caption with <a href="http://dev7studios.com" rel="nofollow">a credit link</a> for <em>this slider</em>.
+            </div>
+        </div>
+		<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
+        <script type="text/javascript">
+        $(window).load(function() {
+            $('#slider').nivoSlider({
+				controlNav:false
+			});
+        });
+        </script>
+    </div> <!-- END of header -->
+</div> <!-- END of header wrapper -->
+
