@@ -6,24 +6,18 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
-                <li><a href="/products">Products</a>
-                    <ul>
-                        <li><a href="http://www.templatemo.com/page/1" rel="nofollow">Sub Page One</a></li>
-                        <li><a href="http://www.templatemo.com/page/2" rel="nofollow">Sub Page Two</a></li>
-                        <li><a href="http://www.templatemo.com/page/3" rel="nofollow">Sub Page Three</a></li>
-                        <li><a href="http://www.templatemo.com/page/4" rel="nofollow">Sub Page Four</a></li>
-                        <li><a href="http://www.templatemo.com/page/5" rel="nofollow">Sub Page Five</a></li>                        
-                  	</ul>
-                </li>
                 <li><a href="/checkout">Checkout</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <li><a href="/faqs">FAQs</a></li>
-	
 				<% if (user) { %>
- 	               <li><a href="/profile">Profile</a></li>
- 	               <li><a href="/logout">Logout</a></li>				
+				   <li><a href="#">Account</a>
+				   		<ul>
+		 	               <li><a href="/profile">Profile</a></li>
+	 		               <li><a href="/setting">Setting</a></li>
+ 		               </ul>
+ 		           </li>
+				<li><a href="/logout">Logout</a></li> 		           
 				<% } %>
-                
             </ul>
             <div id="templatemo_search">
                 <form action="#" method="get">

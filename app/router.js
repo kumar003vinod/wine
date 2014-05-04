@@ -1,5 +1,7 @@
 module.exports = function(app,passport)
 {
+	var funclib = require('./funclib.js');
+	
 	//routes for application
 	app.get('/',function(req, res){
 		res.render('index.ejs',{
@@ -8,10 +10,8 @@ module.exports = function(app,passport)
 	});
 	
 	//PROFILE (can't view without login)
-	app.get('/profile', isLoggedIn, function(req, res) {
-		res.render('profile.ejs', {
-			user : req.user
-		});
+	app.get('/profile', isLoggedIn,function(req, res) {
+		funclib.userProfile(req,res);
 	});
 
 	// LOGOUT
@@ -51,6 +51,10 @@ module.exports = function(app,passport)
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
+
+	app.get('/shoppingcart', isLoggedIn,function(req, res) {
+		funclib.shoppingCart(res,req);
+	});
 
 
 };

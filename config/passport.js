@@ -1,27 +1,9 @@
 // load all the things we need
 var LocalStrategy    = require('passport-local').Strategy;
-var mysql = require('mysql');
 
 //connect to database
-var connection = mysql.createConnection({
-    user: "root",
-    password: "vinod",
-    database: "test"
-});
-
-connection.connect(function(err) {
-	// connected! (unless `err` is set)
-	if (!err)
-	{
-		//connection is successful
-		//console.log('database connected');
-	}
-	else
-	{
-		console.log(err.code); // 'ECONNREFUSED'
-		console.log(err.fatal); // true
-	}
-});
+var dbauth = require('./dbauth.js');
+var connection = dbauth.NewDatabaseConnection();
 
 module.exports = function(passport) {
 
@@ -33,20 +15,20 @@ module.exports = function(passport) {
 
     // used to serialize the user for the session
 	passport.serializeUser(function(user, done) {
-		done(null, user.id);
+		done(null, user.user_id);
 	});
 
 	// used to deserialize the user
-	passport.deserializeUser(function(id, done) {
-		sql = 'SELECT * FROM users WHERE id = '+id+';';
+	passport.deserializeUser(function(user_id, done) {
+		sql = 'SELECT * FROM users WHERE user_id = '+user_id+';';
 		connection.query(sql,function (error, rows, fields)
 		{
 			if(error) throw error;
 			if(rows.length>0)
 			{
 				var user = {};
-				user.id = rows[0].id;
-				user.email = rows[0].email;
+				user.user_id = rows[0].user_id;
+				user.username = rows[0].username;
 				done(null, user);
 			}
 		});
@@ -65,15 +47,15 @@ module.exports = function(passport) {
         if (email)
             email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
 		
-		sql = 'SELECT * FROM users WHERE email = '+connection.escape(email)+' AND password = "'+password+'";';
+		sql = 'SELECT * FROM users WHERE username = '+connection.escape(email)+' AND password = "'+password+'";';
 		connection.query(sql,function (error, rows, fields)
 		{
 			if(error) throw error;
 			if(rows.length>0)
 			{
 				var user = {};
-				user.id = rows[0].id;
-				user.email = rows[0].email;
+				user.user_id = rows[0].user_id;
+				user.username = rows[0].username;
 				return done(null, user);
 			}
 			else
@@ -98,31 +80,23 @@ module.exports = function(passport) {
 //if user is already logged-in
 			
 			//check to see if theres already a user with that email
-			var sql = 'SELECT * FROM users WHERE email = '+connection.escape(email)+';';
+			var sql = 'SELECT AddUser('+connection.escape(email)+','+connection.escape(password)+',"user") AS result';
 			connection.query(sql,function (error, rows, fields)
 			{
 				if(error) throw error;
-				if(rows.length>0)
-						return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+				if(rows[0].result==0)
+				{
+					return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+				}
 				else
 				{
-					// create the user
-					connection.query('INSERT INTO users (email,password) VALUES('+connection.escape(email)+',"'+password+'");',function (error, rows, fields)
-					{
-						if(error) throw error;
-						var sql = 'SELECT * FROM users WHERE email = '+connection.escape(email)+';';
-						connection.query(sql,function (error, rows, fields)
-						{
-							if(error) throw error;
-							var user = {};
-							user.id = rows[0].id;
-							user.email = rows[0].email;
-							return done(null, user);
-						});
-					});
+					var user = {};
+					user.user_id = rows[0].result;
+					user.username = email;
+					return done(null, user);
 				}
 			});
-			
 	}));
 
 };
+
