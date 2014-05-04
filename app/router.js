@@ -56,6 +56,10 @@ module.exports = function(app,passport)
 		funclib.shoppingCart(res,req);
 	});
 
+	app.get('/remove', isLoggedIn,function(req, res) {
+		funclib.shoppingCart(res,req);
+	});
+
 
 };
 
