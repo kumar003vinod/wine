@@ -45,4 +45,17 @@ function shoppingCart(res,req)
 
 exports.shoppingCart = shoppingCart;
 
+function removeItem(req,res)
+{
+	var sql = 'DELETE FROM cart WHERE id = '+req.body.id;
+	console.log("ssssss");
+	connection.query(sql,function (error, rows, fields)
+	{
+		console.log("ssssss");
+		if(error) throw error;
+		res.send("item removes successfully\n");
+	});
+}
+exports.removeItem = removeItem;
+
 

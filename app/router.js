@@ -56,8 +56,8 @@ module.exports = function(app,passport)
 		funclib.shoppingCart(res,req);
 	});
 
-	app.get('/remove', isLoggedIn,function(req, res) {
-		funclib.shoppingCart(res,req);
+	app.post('/removeitem', isLoggedIn,function(req, res) {
+		funclib.removeItem(req,res);
 	});
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Floral Shop, Shopping Cart, Online Store</title>
+<title>Wine Shopping Cart</title>
 <meta name="keywords" content="free template, shopping cart, floral, ecommerce, online, store" />
 <meta name="description" content="Floral, Shopping Cart, free template for ecommerce websites." />
 <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
@@ -14,12 +14,8 @@
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/ddsmoothmenu.js">
-
-/***********************************************
-* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
-* This notice MUST stay intact for legal use
-* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
-***********************************************/
+<script src="../js/jquery-latest.js"></script>
+<script src="../js/jquery-1.9.1.js"></script>
 
 </script>
 
@@ -39,6 +35,36 @@ function clearText(field)
     else if (field.value == '') field.value = field.defaultValue;
 }
 
+
+
+function RemoveItem(id)
+{
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	xmlhttp.onreadystatechange=function()
+	{
+
+		document.getElementById("remove-button"+id).innerHTML="<td id = 'loading-image'><img src='/images/loading.gif' width='18' height='18' alt='wait...' title='please wait...'/></td>";
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("item"+id).innerHTML=xmlhttp.responseText;
+		}
+		 
+	 }
+	xmlhttp.open("POST","/removeitem",true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("id="+id);
+}
+</script>
+
+
 </script>
 
 
@@ -46,40 +72,7 @@ function clearText(field)
 
 <body>
 
-<div id="templatemo_wrapper_sp">
-<div id="templatemo_header_wsp">
-	<div id="templatemo_header" class="header_subpage">
-    	<div id="site_title"><a href="http://www.templatemo.com" rel="nofollow">Free CSS Templates</a></div>
-        <div id="templatemo_menu" class="ddsmoothmenu">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="products.html">Products</a>
-                    <ul>
-                        <li><a href="http://www.templatemo.com/page/1" rel="nofollow">Sub Page One</a></li>
-                        <li><a href="http://www.templatemo.com/page/2" rel="nofollow">Sub Page Two</a></li>
-                        <li><a href="http://www.templatemo.com/page/3" rel="nofollow">Sub Page Three</a></li>
-                        <li><a href="http://www.templatemo.com/page/4" rel="nofollow">Sub Page Four</a></li>
-                        <li><a href="http://www.templatemo.com/page/5" rel="nofollow">Sub Page Five</a></li>
-                  	</ul>
-                </li>
-                <li><a href="checkout.html">Checkout</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="faqs.html">FAQs</a></li>
-            </ul>
-            <div id="templatemo_search">
-                <form action="#" method="get">
-                  	<input type="text" value="Site Search" name="keyword" id="keyword" title="keyword"
-                  			onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
-                  	<input type="submit" name="Search" value="" alt="Search" id="searchbutton" title="Search" class="sub_btn" />
-                </form>
-            </div>
-            <br style="clear: left" />
-        </div>
-        <a href="http://es.clipartlogo.com/free/music.html"   class="site_repeat" ><img src="images/top_repeat.png"  alt=" música" /></a><!-- end of templatemo_menu -->
-
-    </div> <!-- END of header -->
-</div> <!-- END of header wrapper -->
+<%- include header.ejs %>
 
 <div id="templatemo_main_wrapper">
 <div id="templatemo_main">
@@ -124,33 +117,34 @@ function clearText(field)
                 <th width="80" align="right">Price</th>
                 <th width="80" align="right">Total</th>
                 <th width="64"> </th>
+          	</tr>
 
 	<%if(total_items == 0) { %> 
 	You have no item in your cart.
 	<%}%>
 	
-	<form action="/updatecart" method = "post">
+	<form action="/updatecart" method="post">
 	<% var alltotal = 0;
 	for(var i=0; i < total_items; i++) {
 	alltotal+=items[i].quantity*items[i].price;
 	%>
-          	</tr>
-            <tr bgcolor="#41581B">
+            <tr bgcolor="#41581B" id = "item<%=items[i].id%>">
                 <td><img src="images/product/01.jpg" alt="flower image 1" /></td>
                 <td><%=items[i].name%></td>
                 <td align="center"><input name="quantity1" type="text" id="quantity1" value="<%=items[i].quantity%>" size="6" maxlength="2" /> </td>
                 <td align="right"><%=items[i].price%> /-</td>
                 <td align="right"><%=items[i].quantity*items[i].price%> /-</td>
-                <td align="center"> <a href="#"><img src="images/remove.png" alt="remove" /><br />Remove</a> </td>
+                <td align="center" id = "remove-button<%=items[i].id%>"> <button type = "button" style="background:transparent; border:none; color:transparent; cursor:pointer" onclick = "RemoveItem(<%=items[i].id%>)"" ><img src="images/remove.png" alt="remove"/></button><br />Remove<t/d>
             </tr>
 	<%}%>
-	</form>
 <tr bgcolor="#41581B">
-                <td colspan="3">Have you modified item quantities? Please <a href="shoppingcart.html"><strong>Update</strong></a> the Cart.&nbsp;&nbsp;</td>
+                <td colspan="3">Have you modified item quantities? Please <strong><button type = "submit" name = "submit" value = "submit">Update</button></strong>the Cart.&nbsp;&nbsp;</td>
                 <td align="right"><h4>All Total:</h4></td>
                 <td align="right"><h4><%=alltotal%> /-</h4></td>
                 <td> </td>
             </tr>
+	</form>
+            
         </table>
 		<div class="cleaner h20"></div>
         <div class="right"><a href="checkout.html" class="button">checkout</a></div>
