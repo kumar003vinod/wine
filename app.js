@@ -18,7 +18,5 @@ app.configure(function(){
 
 //import routes
 require('./app/router.js')(app,passport);
-
-
 app.listen(3000);
 

@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Floral Shop, Products, Online Shopping</title>
+<meta name="keywords" content="free template, floral shop, ecommerce, online shopping, store" />
+<meta name="description" content="Floral Shop, Products, free website template for ecommerce shopping websites." />
+<link href="templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="css/orman.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/ddsmoothmenu.js">
+
+
+/***********************************************
+* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+</script>
+<script type="text/javascript">
+
+ddsmoothmenu.init({
+	mainmenuid: "templatemo_menu", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	//customtheme: ["#1c5a80", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})
+
+function clearText(field)
+{
+    if (field.defaultValue == field.value) field.value = '';
+    else if (field.value == '') field.value = field.defaultValue;
+}
+
+</script>
+
+</head>
+
+<body id="replace">
+
+<%- include header.ejs%>
+<div id="templatemo_main_wrapper">
+<div id="templatemo_main">
+	<div id="sidebar" class="left">
+    	<div class="sidebar_box"><span class="bottom"></span>
+            <h3>Special items</h3>
+            <div class="content">
+                <ul class="sidebar_list">
+                    <li><a href="#">Nulla odio ipsum</a></li>
+                    <li><a href="#">Suspendisse posuere</a></li>
+                    <li><a href="#">Aliquam euismod</a></li>
+                    <li><a href="#">Curabitur ac mauris</a></li>
+                    <li><a href="#">Mauris nulla tortor</a></li>
+                    <li><a href="#">Nullam ultrices</a></li>
+                    <li><a href="#">Vivamus scelerisque</a></li>
+                    <li><a href="#">Suspendisse posuere</a></li>
+                    <li><a href="#">Quisque vel justo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar_box"><span class="bottom"></span>
+            <h3>Best seller</h3>
+            <div class="content special">
+                <img src="images/templatemo_image_01.jpg" alt="Flowers" />
+                <a href="#">Citrus Burst Bouquet</a>
+                <p>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="right">
+<div id="box"> 
+<h2>Products</h2>
+        <p class="button left">products related to search</p>
+        	<br>
+        	<br>
+<div class="blank_box" id=button>
+	<% if( items.length  > 7) { %>
+	<a href="#" input type="submit" class="button left" onclick="loadXMLDoc(<%=items[0].wine_id%>,'/prev')"><input type="image" src="images/prevlabel.gif"></a>
+	<% } %>
+	<% if( items[0].wine_id  >= 9) { %>
+	<br>
+	<br>
+	<% } %>
+</div> 	
+<% if( items.length  > 7) { %>
+	<div class="blank_box" id=button>
+	<a href="#" input type="submit" class="button right" onclick="loadXMLDoc(<%=items[7].wine_id%>,'/next')"><input type="image" src="images/nextlabel.gif"></a>
+	<br>
+	<br>
+	</div>
+<% } %>
+
+<% if( items.length  == 0) { %>
+	<h3>result not found</h3>
+<% } %>
+<% for(var i = 0; i < items.length; ++i) { %>
+  <div class="product_box">
+		<h3><%=items[i].name%></h3>
+            <a href="/productdetails?id=<%=items[i].wine_id%>"><img src="images/product/01.jpg" alt="floral set 1" /></a>
+      		<h3>RS - <%=items[i].price%> INR	</h3>
+	    <meter value=<%=items[i].rate%> min="0" max="5" id="meter"></meter>
+	    <% if( items[i].rate==null) { %>
+	<h3>not rated yet! </h3>
+	<a href="#" input type="submit" class="button left" id="buttto" onclick="loadXMLDoc1(<%=items[i].wine_id%>,<%=items[0].wine_id%>,'/rate')">rate now</a>
+<% } %>
+	 <% if( items[i].rate!=null) { %>
+	<h3>current rating <%=items[i].rate%>/5</h3>
+	<a href="#" input type="submit" class="button left" id="butto" onclick="loadXMLDoc1(<%=items[i].wine_id%>,<%=items[0].wine_id%>,'/rate')">rate now</a>
+
+<% } %>
+            <p class="add_to_cart">
+                <a href="/productdetails?id=<%=items[i].wine_id%>"><input type="image" src="images/detail.jpg"></a>
+                <a href="/productdetails?id=<%=items[i].wine_id%>"><input type="image" src="images/cart.jpg"></a>
+            </p>
+		
+        </div>
+<% } %>
+</div>
+<script>
+function loadXMLDoc(next,string)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("box").innerHTML=xmlhttp.responseText;
+    }
+  } 
+
+xmlhttp.open("POST",string,true);
+xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlhttp.send("id="+next);
+}
+</script>
+<script>
+function loadXMLDoc1(next,base,string,user)
+{
+var rate=prompt("rate next","out of 5");
+
+if (rate!=null && rate>=0 && rate <=5)
+  {
+ 
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("box").innerHTML=xmlhttp.responseText;
+    }
+  } 
+
+xmlhttp.open("POST",string,true);
+xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlhttp.send("id="+next+"&rate="+rate+"&base="+base);
+}
+else
+	alert("not valid");
+}
+</script>
+        <div class="cleaner h20"></div>
+    	<div class="blank_box">
+        </div>
+    </div>
+    <div class="cleaner"></div>
+</div> <!-- END of main -->
+</div> <!-- END of main wrapper -->
+
+<%- include footer.ejs%>
+
+</div>
+
+<script type='text/javascript' src='js/logging.js'></script>
+</body>
+</html>

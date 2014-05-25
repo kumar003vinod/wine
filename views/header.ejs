@@ -8,29 +8,35 @@
                 <li><a href="/about">About</a></li>
                 <li><a href="/checkout">Checkout</a></li>
                 <li><a href="/contact">Contact</a></li>
-                <li><a href="/faqs">FAQs</a></li>
+                <li><a href="">Locate</a>
+                	<ul>
+                		<li><a href="/locate">Locate All</a></li>
+                		<li><a href="/getdirection">Get Direction</a></li>
+                	</ul>
+                </li>
+                
+                <li><a href="/faqs">FAQs</a>
 				<% if (user) { %>
 				   <li><a href="#">Account</a>
 				   		<ul>
 		 	               <li><a href="/profile">Profile</a></li>
 	 		               <li><a href="/setting">Setting</a></li>
 	 		               <li><a href="/shoppingcart">Shopping Cart</a></li>
-	 		               <li><a href="/whislist">WhisList</a></li>
+	 		               <li><a href="/wishlist">WishList</a></li>
  		               </ul>
  		           </li>
 				<li><a href="/logout">Logout</a></li> 		           
-				<% } %>
+				<%}%>
             </ul>
             <div id="templatemo_search">
-                <form action="#" method="get">
-                  	<input type="text" value="Site Search" name="keyword" id="keyword" title="keyword"
+                <form action="/searchs" method="post">
+                  	<input type="text" value="Search Wine" name="keyword" id="keyword" title="keyword"
                   			onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
                   	<input type="submit" name="Search" value="" alt="Search" id="searchbutton" title="Search" class="sub_btn" />
                 </form>
             </div>
             <br style="clear: left" />
         </div>
-        <a href="http://www.clipartlogo.com" title="clip art"  class="site_repeat" target="_blank"><img src="images/top_repeat.png" title="clip art from www.clipartlogo.com" alt="clip art from www.clipartlogo.com" /></a><!-- end of templatemo_menu -->
 
     </div> <!-- END of header -->
 </div> <!-- END of header wrapper -->

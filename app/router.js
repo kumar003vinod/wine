@@ -4,9 +4,7 @@ module.exports = function(app,passport)
 	
 	//routes for application
 	app.get('/',function(req, res){
-		res.render('index.ejs',{
-			user : req.user
-		});
+	funclib.getItems(req,res);
 	});
 	
 	//PROFILE (can't view without login)
@@ -23,7 +21,7 @@ module.exports = function(app,passport)
 	// CHECKOUT (can't view with login)
 	// show the login form
 	app.get('/checkout', isLoggedIn,function(req, res) {
-		res.render('checkout.ejs', { message: req.flash('loginMessage'),user:req.user });
+		funclib.checkout(req,res);
 	});
 
 	// LOGIN (can't view with login)
@@ -56,10 +54,80 @@ module.exports = function(app,passport)
 		funclib.shoppingCart(res,req);
 	});
 
-	app.post('/removeitem', isLoggedIn,function(req, res) {
-		funclib.removeItem(req,res);
+	app.get('/wishlist', isLoggedIn,function(req, res) {
+		funclib.wishlist(res,req);
 	});
 
+	app.post('/removecartitem', isLoggedInWarning,function(req, res) {
+		funclib.removecartItem(req,res);
+	});
+
+	app.post('/removewishlistitem', isLoggedInWarning,function(req, res) {
+		funclib.removeWishlistItem(req,res);
+	});
+
+	app.get('/productdetails',function(req, res) {
+		funclib.getItemDetails(req,res);
+	});
+	
+
+	app.post('/additem',isLoggedIn,function(req, res) {
+		funclib.addItem(req,res);
+	});
+
+	app.post('/order',isLoggedIn,function(req, res) {
+		funclib.PlaceOrder(req,res);
+	});
+
+	app.post('/updatecartitem', isLoggedIn,function(req, res) {
+		funclib.updatecartItem(req,res);
+	});
+
+	app.get('/locate',function(req, res) {
+		funclib.locateWineries(req,res);
+	});
+
+	app.get('/getdirection',function(req, res) {
+		funclib.getDirection(req,res);
+	});
+
+	app.get('/getwineries',function(req, res) {
+		funclib.getWineries(req,res);
+	});
+
+	app.get('/getwineryinfo',function(req, res) {
+		funclib.getWineryinfo(req,res);
+	});
+
+	app.post('/getcomments',function(req, res) {
+		funclib.getComments(req,res);
+	});
+
+	app.post('/addcomment',function(req, res) {
+		funclib.addComment(req,res);
+	});
+
+	app.post('/addtowishlist',function(req, res) {
+		funclib.addToWishlist(req,res);
+	});
+	app.post('/next',function(req,res) {
+		funclib.next(req,res);
+	});
+	app.post('/prev',function(req,res) {
+		funclib.prev(req,res);
+	});
+	app.post('/rate', isLoggedIn1,function(req, res) {
+		funclib.rate(req,res);
+	});
+		app.get('/login1', isNotLoggedIn,function(req, res) {
+		res.render('login1.ejs', { message: req.flash('loginMessage'),user:req.user });
+	});
+	app.post('/searchs',function(req,res) {
+		funclib.searchs(req,res);
+	});
+	app.get('/products',function(req,res) {
+		funclib.products(req,res);
+	});
 
 };
 
@@ -70,9 +138,20 @@ function isLoggedIn(req, res, next) {
 	res.redirect('/login');
 }
 
+function isLoggedInWarning(req, res, next) {
+	if (req.isAuthenticated())
+		return next();
+	res.send("please <a href='/login'>login</a> to use this feature.");
+}
+
 function isNotLoggedIn(req, res, next) {
 	if (!req.isAuthenticated())
 		return next();
 	res.redirect('/');
+}
+function isLoggedIn1(req, res, next) {
+	if (req.isAuthenticated())
+		return next();
+	res.redirect('/login1');
 }
 

@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Wine Web Store, A Database Project</title>
+<meta name="keywords" content="free template, floral shop, ecommerce, online shopping, store" />
+<meta name="description" content="Floral Shop is free website template for ecommerce or online shopping websites. Products, Shopping Cart, FAQs and Checkout pages are included." />
+<link href="templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="css/orman.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/ddsmoothmenu.js">
+
+/***********************************************
+* Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+</script>
+
+<script type="text/javascript">
+
+ddsmoothmenu.init({
+	mainmenuid: "templatemo_menu", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	//customtheme: ["#1c5a80", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})
+
+function clearText(field)
+{
+    if (field.defaultValue == field.value) field.value = '';
+    else if (field.value == '') field.value = field.defaultValue;
+}
+
+</script>
+
+<link rel="stylesheet" href="css/slimbox2.css" type="text/css" media="screen" />
+<script type="text/JavaScript" src="js/slimbox2.js"></script>
+
+
+</head>
+
+<body>
+
+<%- include header_index.ejs %>
+
+<div id="templatemo_main_wrapper">
+<div id="templatemo_main">
+	<div id="sidebar" class="left">
+    	<div class="sidebar_box"><span class="bottom"></span>
+            <h3>Categories</h3>
+            <div class="content">
+                <ul class="sidebar_list">
+                    <li><a href="#">Nulla odio ipsum</a></li>
+                    <li><a href="#">Suspendisse posuere</a></li>
+                    <li><a href="#">Aliquam euismod</a></li>
+                    <li><a href="#">Curabitur ac mauris</a></li>
+                    <li><a href="#">Mauris nulla tortor</a></li>
+                    <li><a href="#">Nullam ultrices</a></li>
+                    <li><a href="#">Vivamus scelerisque</a></li>
+                    <li><a href="#">Suspendisse posuere</a></li>
+                    <li><a href="#">Quisque vel justo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar_box"><span class="bottom"></span>
+            <h3>Weekly Special</h3>
+            <div class="content special">
+                <img src="images/templatemo_image_01.jpg" alt="Flowers" />
+                <a href="#">Citrus Burst Bouquet</a>
+                <p>
+                	Price:
+                    <span class="price normal_price">$160</span>&nbsp;&nbsp;
+                    <span class="price special_price">$100</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="right">
+		<h2>Welcome to Wine Shop</h2>
+		
+	    <div class="content_half left form_field">
+			<h3>OOPS! AN ERROR OCCURED.</h3>
+			<h3>Visit our <a href="/">Home Page</a>.</h3>
+				    
+	    </div>
+
+	    <div class="content_half right form_field">
+	    
+	    </div>
+
+        <div class="blank_box">
+        	<a href="#"><img src="images/free_shipping.jpg" alt="Free Shipping" /></a>
+        </div>
+    </div>
+    <div class="cleaner"></div>
+</div> <!-- END of main -->
+</div> <!-- END of main wrapper -->
+
+<%- include footer.ejs %>
+</div>
+
+<script type='text/javascript' src='js/logging.js'></script>
+</body>
+</html>

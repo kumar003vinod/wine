@@ -13,12 +13,8 @@
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/ddsmoothmenu.js">
-<script src="../js/jquery-latest.js"></script>
-<script src="../js/jquery-1.9.1.js"></script>
 
-</script>
-
+<script type="text/javascript" src="js/ddsmoothmenu.js"></script>
 <script type="text/javascript">
 
 ddsmoothmenu.init({
@@ -51,18 +47,74 @@ function RemoveItem(id)
 	xmlhttp.onreadystatechange=function()
 	{
 
+		var prev_total = document.getElementById('total'+id).innerHTML;
+		var prev_all_total = document.getElementById('all-total').innerHTML;
+		var new_all_total = prev_all_total - prev_total;
+
 		document.getElementById("remove-button"+id).innerHTML="<td id = 'loading-image'><img src='/images/loading.gif' width='18' height='18' alt='wait...' title='please wait...'/></td>";
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
 			document.getElementById("item"+id).innerHTML=xmlhttp.responseText;
+			document.getElementById('all-total').innerHTML = new_all_total;
 		}
 		 
 	 }
-	xmlhttp.open("POST","/removeitem",true);
+	xmlhttp.open("POST","/removecartitem",true);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlhttp.send("id="+id);
-}
+};
 </script>
+<script>
+
+function UpdateItem(id)
+{
+	try
+	{
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();
+		}
+		else
+		{// code for IE6, IE5
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		var quantity = document.getElementById('quantity'+id).value;
+		if(isNaN(quantity) || quantity > 50 ||quantity <= 0)
+		{
+			document.getElementById('alert'+id).innerHTML="please enter number between 1 to 50";
+		}
+		else
+		{
+			document.getElementById('alert'+id).innerHTML="";
+			var prev_total = document.getElementById('total'+id).innerHTML;
+			var price = document.getElementById('price'+id).innerHTML;
+			var prev_all_total = document.getElementById('all-total').innerHTML;
+		
+			var new_total = quantity*price;
+			var new_all_total = prev_all_total - prev_total + new_total;
+		
+			xmlhttp.onreadystatechange=function()
+			{
+				if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					
+					document.getElementById('all-total').innerHTML = new_all_total;
+					document.getElementById('total'+id).innerHTML = new_total;
+				}
+				 
+			 }
+			xmlhttp.open("POST","/updatecartitem",true);
+			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xmlhttp.send("id="+id+"&quantity="+quantity);
+		}
+	
+	}
+	catch(err)
+	{
+		alert(err);
+	}
+}
 
 
 </script>
@@ -109,70 +161,51 @@ function RemoveItem(id)
 
     <div id="content" class="right">
     	<h2>Shopping Cart</h2>
+    	
+	<%if(total_items == 0) { %> 
+	<h4>You have no item in your cart.</h4>
+	<%}else{%>
+    	<h4>You can only buy maximum <span style='color:pink'>50</span> units of any item at once.</h4>
+
 		<table width="700" border="0" cellpadding="5" cellspacing="0">
-          	<tr bgcolor="#395015">
+          	<tr bgcolor="#fff">
                 <th width="168" align="left">Item</th>
                 <th width="188" align="left">Description</th>
-                <th width="60" align="center">Quantity</th>
+                <th width="80" align="center">Quantity</th>
                 <th width="80" align="right">Price</th>
                 <th width="80" align="right">Total</th>
-                <th width="64"> </th>
+                <th width="80" align="right">Remove</th>
           	</tr>
-
-	<%if(total_items == 0) { %> 
-	You have no item in your cart.
-	<%}%>
 	
-	<form action="/updatecart" method="post">
 	<% var alltotal = 0;
 	for(var i=0; i < total_items; i++) {
 	alltotal+=items[i].quantity*items[i].price;
 	%>
-            <tr bgcolor="#41581B" id = "item<%=items[i].id%>">
+            <tr bgcolor="#fff" id = "item<%=items[i].id%>">
                 <td><img src="images/product/01.jpg" alt="flower image 1" /></td>
                 <td><%=items[i].name%></td>
-                <td align="center"><input name="quantity1" type="text" id="quantity1" value="<%=items[i].quantity%>" size="6" maxlength="2" /> </td>
-                <td align="right"><%=items[i].price%> /-</td>
-                <td align="right"><%=items[i].quantity*items[i].price%> /-</td>
-                <td align="center" id = "remove-button<%=items[i].id%>"> <button type = "button" style="background:transparent; border:none; color:transparent; cursor:pointer" onclick = "RemoveItem(<%=items[i].id%>)"" ><img src="images/remove.png" alt="remove"/></button><br />Remove<t/d>
+                <td align="center"><input name="quantity<%=items[i].id%>" type="text" id="quantity<%=items[i].id%>" value="<%=items[i].quantity%>" size="6" maxlength="2" onkeyup = "UpdateItem(<%=items[i].id%>)"/><p id="alert<%=items[i].id%>"></p> </td>
+                <td align="right"><p id="price<%=items[i].id%>" style = "display:inline"><%=items[i].price%></p> /-</td>
+                <td align="right"><p id="total<%=items[i].id%>" style = "display:inline"><%=items[i].quantity*items[i].price%></p> /-</td>
+                <td align="right" id = "remove-button<%=items[i].id%>"> <button type = "button" style="background:transparent; border:none; color:transparent; cursor:pointer" onclick = "RemoveItem(<%=items[i].id%>)"" ><img src="images/remove.png" alt="remove"/></button><br />Remove</td>
+
             </tr>
 	<%}%>
-<tr bgcolor="#41581B">
-                <td colspan="3">Have you modified item quantities? Please <strong><button type = "submit" name = "submit" value = "submit">Update</button></strong>the Cart.&nbsp;&nbsp;</td>
-                <td align="right"><h4>All Total:</h4></td>
-                <td align="right"><h4><%=alltotal%> /-</h4></td>
-                <td> </td>
-            </tr>
-	</form>
-            
-        </table>
+	        </table>
+		<br>
+        <h4 class="right">All Total: <p id ="all-total" style="display:inline"><%=alltotal%></p> /-&nbsp;</h4>
 		<div class="cleaner h20"></div>
-        <div class="right"><a href="checkout.html" class="button">checkout</a></div>
-        <div class="cleaner h20"></div>
-        <div class="blank_box">
-        	<a href="#"><img src="images/free_shipping.jpg" alt="Free Shipping" /></a>
-        </div>
+        <div class="right"><a href="/checkout" class="button">checkout</a></div>
+        <%}%>
     </div>
     <div class="cleaner"></div>
 </div> <!-- END of main -->
 </div> <!-- END of main wrapper -->
 
-<div id="templatemo_footer_wrapper">
-<div id="templatemo_footer">
-	<div class="footer_left">
-    	<a href="#"><img src="images/1311260370_paypal-straight.png" alt="Paypal" /></a>
-        <a href="#"><img src="images/1311260374_mastercard-straight.png" alt="Master" /></a>
-        <a href="#"><img src="images/1311260374_visa-straight.png" alt="Visa" /></a>
-    </div>
-	<div class="footer_right">
-		<p><a href="index.html">Home</a> | <a href="products.html">Products</a> | <a href="about.html">About</a> | <a href="faqs.html">FAQs</a> | <a href="checkout.html">Checkout</a> | <a href="contact.html">Contact</a></p>
-        <p>Copyright © 2084 <a href="#">Company Name</a> | Design: <a href="http://www.templatemo.com/preview/templatemo_385_floral_shop" rel="nofollow">Floral Shop</a></p>
-	</div>
-    <div class="cleaner"></div>
-</div> <!-- END of footer -->
-</div> <!-- END of footer wrapper -->
+<%- include footer.ejs %>
 </div>
 
 <script type='text/javascript' src='js/logging.js'></script>
 </body>
 </html>
+

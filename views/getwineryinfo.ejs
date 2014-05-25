@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Wine Web Store, A Database Project</title>
+<meta name="keywords" content="free template, floral shop, ecommerce, online shopping, store" />
+<meta name="description" content="Floral Shop, Check Out, free template for ecommerce websites." />
+<link href="templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="css/orman.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/ddsmoothmenu.js"></script>
+
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="CoffeeCup HTML Editor (www.coffeecup.com)">
+<meta name="dcterms.created" content="Tue, 08 Jan 2013 05:31:17 GMT">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title>Locate All Wineries</title>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+<script>
+var geocoder, map;
+function initialize() {
+geocoder = new google.maps.Geocoder();
+var latlng = new google.maps.LatLng(10, 10);
+var myOptions = {
+    zoom: 5,
+    center: latlng,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  }
+map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+codeAddress();
+}
+
+function locate(address,distric,state,country,zip)
+{
+	geocoder.geocode( { 'address': address}, function(results, status) 
+	{
+		if (status == google.maps.GeocoderStatus.OK) 
+		{
+			map.setCenter(results[0].geometry.location);
+			
+			var marker = new google.maps.Marker({
+			map: map,
+			position: results[0].geometry.location,
+			title : address,
+			animation: google.maps.Animation.BOUNCE
+			});
+			
+			var contentString = "<span style='color:green'>"+distric+"<br>"+state+"<br>"+country+"<br>Click <a href='/getwineryinfo?zip="+zip+"'> here </a>to see full info.</span>";
+			
+			var infowindow = new google.maps.InfoWindow({
+				content: contentString
+			});
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.open(map,marker);
+			});
+		} 
+	});
+}
+function codeAddress() {
+<%
+	if(winery.length>0)
+	{
+		for(var i=0;i<winery.length;i++)
+		{
+		%>
+			locate("<%=winery[i].distric%>","<%=winery[i].distric%>","<%=winery[i].state%>","<%=winery[i].country%>","<%=winery[i].zip%>");
+		<%
+		}
+	}
+	%>
+}
+</script>
+
+<script type="text/javascript">
+
+ddsmoothmenu.init({
+	mainmenuid: "templatemo_menu", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	//customtheme: ["#1c5a80", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})
+
+</script>
+
+
+</head>
+<body onload="initialize()">
+
+<%- include header.ejs %>
+
+<div id="templatemo_main_wrapper">
+<div id="templatemo_main">
+	<div id="sidebar" class="left">
+    	<div class="sidebar_box"><span class="bottom"></span>
+            <h3>Categories</h3>
+            <div class="content">
+                <ul class="sidebar_list">
+                    <li><a href="#">Nulla odio ipsum</a></li>
+                    <li><a href="#">Suspendisse posuere</a></li>
+                    <li><a href="#">Aliquam euismod</a></li>
+                    <li><a href="#">Curabitur ac mauris</a></li>
+                    <li><a href="#">Mauris nulla tortor</a></li>
+                    <li><a href="#">Nullam ultrices</a></li>
+                    <li><a href="#">Vivamus scelerisque</a></li>
+                    <li><a href="#">Suspendisse posuere</a></li>
+                    <li><a href="#">Quisque vel justo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar_box"><span class="bottom"></span>
+            <h3>Weekly Special</h3>
+            <div class="content special">
+                <img src="images/templatemo_image_01.jpg" alt="Flowers" />
+                <a href="#">Citrus Burst Bouquet</a>
+                <p>
+                	Price:
+                    <span class="price normal_price">$160</span>&nbsp;&nbsp;
+                    <span class="price special_price">$100</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="right">
+    	<h2>Locate Us</h2>
+			 <div id="map_canvas" style="width: 700px; height: 545px;"></div>
+			<br/>
+			<br/>
+            </div>
+
+            <div class="blank_box">
+        	<a href="#"><img src="images/free_shipping.jpg" alt="Free Shipping" /></a>
+        	</div>
+    </div>
+
+    <div class="cleaner"></div>
+</div> <!-- END of main -->
+</div> <!-- END of main wrapper -->
+
+<%- include footer.ejs %>
+</div>
+
+<script type='text/javascript' src='js/logging.js'></script>
+
+ 
+</body>
+</html>
+

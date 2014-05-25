@@ -3,17 +3,23 @@
 body {
 	margin: 0;
 	padding: 0;
-	color: #d6dbce;
+	color:#333;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	line-height: 20px; 
 	background-color: #ffffff; 
-	background-repeat: repeat;
-	background: url(images/templatemo_main.png)
+	background-repeat: fixed;
+	background: url(images/templatemo_main.jpg)
 }
+#meter {
 
+	float: left;
+	width: 90%; 
+	color: lime; 
+	background-color: orange
+}
 h1, h2, h3, h4, h5, h6 {
-	color: #fff;
+	color: #333;
 	letter-spacing: -1px;
 	font-weight: 400;
 	padding: 0;
@@ -22,13 +28,13 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 { font-size: 32px; margin-bottom: 20px; }
 h2 { font-size: 28px; margin-bottom: 20px; }
-h3 { font-size: 20px; margin-bottom: 20px; }
+h3 { font-size: 20px; margin-bottom: 20px;  }
 h4 { font-size: 16px; margin-bottom: 10px; font-weight: 100 }
 h5 { font-size: 14px }
 h6 { font-size: 12px }
 .header { display: block }
 
-.left { float:left }
+.left { float:left; color: #333}
 .right { float:right }
 
 em { color: #e1d620 }
@@ -37,7 +43,7 @@ em { color: #e1d620 }
 .img_fr { float: left; margin: 3px 0 5px 15px }
 .img_border { background: #fff; padding: 4px; border: 1px solid #eee }
 
-a:link, a:visited { color:#e79e05; text-decoration: none }
+a:link, a:visited { color:#8a2be2; text-decoration: none }
 a:visited { text-decoration:none }
 a:hover { text-decoration:none }
 a:hover,a:active { outline:none }
@@ -161,13 +167,10 @@ cite span { font-weight: 400; color: #333; }
 	left: 0px;
 	width: 242px;
 	height: 5px;
-	background: url(images/templatemo_sbbgb.png)
 }
-.sidebar_box h3 { font-size: 14px; font-weight: 700; padding: 0 10px 0 10px; margin: 0; width: 222px; height: 44px; line-height: 44px; margin-bottom: 0; background: url(images/templatemo_sbheader.png)  no-repeat; color: #fff }
-
+.sidebar_box h3 { font-size: 15px; font-weight: 500; padding: 0 10px 0 10px; margin: 0; width: 222px; height: 44px; line-height: 44px; margin-bottom: 0; background: url(images/templatemo_sliderbg.png)  no-repeat; color: #333 }
 #sidebar .sidebar_box .content {
 	padding: 10px 10px 5px;
-	background: url(images/templatemo_sbbg.png) repeat-y
 }
 
 .special { text-align: center }
@@ -176,10 +179,10 @@ cite span { font-weight: 400; color: #333; }
 
 #sidebar .sidebar_list { margin: 0; padding: 0 0 10px; list-style: none; }
 #sidebar .sidebar_list li { display: block; margin: 0; padding: 5px 0 }
-#sidebar .sidebar_list li a { color: #ffffff; text-decoration: none; background: url(images/templatemo_list.png) left center no-repeat; padding-left: 18px  }
-#sidebar .sidebar_list li a:hover { color: #fff; text-decoration: none }
+#sidebar .sidebar_list li a { color: #333; text-decoration: none; background: url(images/templatemo_list.png) left center no-repeat; padding-left: 18px; line-height: 28px; font-size: 14px; }
+#sidebar .sidebar_list li a:hover { color: rgb(0,0,0); text-decoration: none; font-weight: 900;}
 
-#content h2 { padding: 10px; background: url(images/templatemo_h2.png) repeat }
+#content h2 { padding: 10px; background: url(images/templatemo_h2.png) repeat; color: #333 }
 
 .product_box {
 	float: left;
@@ -193,10 +196,10 @@ cite span { font-weight: 400; color: #333; }
 	margin-bottom: 5px;
 }
 .product_box h3 {
-	font-size: 11px;
-	color: #fff;
+	font-size: 13px;
+	color: #333;
 	margin-bottom: 5px;
-	font-weight: 700;
+	font-weight: 600;
 }
 .product_box .product_price {
 	color: #fff;
@@ -208,7 +211,6 @@ cite span { font-weight: 400; color: #333; }
 	clear: both;
 	width: 165px;
 	height: 28px;
-	background: url(images/addtocart.png) no-repeat
 }
 
 .product_box .add_to_cart a {
@@ -227,15 +229,14 @@ a.button {
 	width: 80px;
 	height: 28px;
 	line-height: 28px;
-	background: url(images/templatemo_btn.png) no-repeat
 }
 
 .form_field input { 
-	background: #395015; 
+	background: #fff; 
 	border: 1px solid #5d7c29; 
 	width: 300px;
 	padding: 4px;
-	color: #FFFFFF;
+	color: #333;
 }
 
 #contact_form { padding: 0; margin-bottom: 40px }
@@ -280,6 +281,19 @@ a.button {
 	color: #333; 
 	font-size: 11px;
 	cursor: pointer;
+}
+
+button
+{
+	display: block; 
+	text-align: center; 
+	text-decoration: none; 
+	font-weight: bold;  
+	background: lightgrey;
+	border: none; 
+	color: #333; 
+	font-size: 11px;
+	cursor: pointer;	
 }
 
 .submit_right {

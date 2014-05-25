@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Wine <%=details[0].wine_name%></title>
+<meta name="keywords" content="free template, floral shop, ecommerce, online shopping, store" />
+<meta name="description" content="Floral Shop, Product Details, free template for ecommerce websites." />
+<link href="templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="css/orman.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/ddsmoothmenu.js"></script>
+
+<script type="text/javascript">
+
+ddsmoothmenu.init({
+	mainmenuid: "templatemo_menu", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	//customtheme: ["#1c5a80", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})
+
+function clearText(field)
+{
+    if (field.defaultValue == field.value) field.value = '';
+    else if (field.value == '') field.value = field.defaultValue;
+}
+</script>
+
+<script>
+$(document).ready(function(){
+		var wine_id = $("#comment-input-form").attr('wine_id');
+		$( "#load-comment" ).empty().append("<h4 style='display:inline'>Loading comments please wait..</h4>&nbsp;&nbsp;<img src='/images/loading.gif' width='15' height='15' alt='wait...' title='loading comments please wait...'/></td>");
+		/* Send the data using post */
+		/* Put the results in a div */
+		var posting = $.post( "/getcomments", { wine_id: wine_id} ).done(function(data) {
+		$( "#load-comment" ).replaceWith(data);
+		});
+		
+
+		
+		/* attach a submit handler to the form */
+		$("#add_item_form").submit(function(event) {
+		/* stop form from submitting normally */
+		event.preventDefault();
+		/* get some values from elements on the page: */
+		var $form = $( this ),
+		quantity = $form.find( 'input[name="quantity"]' ).val(),
+		wine_id = $form.attr('wine_id'),
+		url = $form.attr( 'action');
+			$( "#result" ).empty().append("<td id = 'loading-image'><h4 style='display:inline'>Loading..</h4>&nbsp;&nbsp;<img src='/images/loading.gif' width='18' height='18' alt='wait...' title='please wait...'/></td>");
+		/* Send the data using post */
+		/* Put the results in a div */
+		var posting = $.post( url, { wine_id: wine_id,quantity: quantity } ).done(function(data) {
+		$( "#result" ).empty().append(data);
+		});
+		
+		});
+		
+
+		/* attach a submit handler to the form */
+		$("#comment-input-form").submit(function(event) {
+		/* stop form from submitting normally */
+		event.preventDefault();
+		/* get some values from elements on the page: */
+		var $form = $( this ),
+		comment_text = $form.find( 'input[name="comment_text"]' ).val(),
+		wine_id = $form.attr('wine_id'),
+		url = $form.attr( 'action');
+		
+		if(comment_text == ""||comment_text ==null)
+		{
+			//do nothing
+		}
+		else
+		{
+			$( "#load-comment" ).empty().append("<td id = 'loading-image'><h4 style='display:inline'>Loading..</h4>&nbsp;&nbsp;<img src='/images/loading.gif' width='18' height='18' alt='wait...' title='please wait...'/></td>");
+			/* Send the data using post */
+			/* Put the results in a div */
+			$( "#load-comment" ).empty().append("<p style='display:inline;'>Loading..&nbsp;&nbsp;<img src='/images/loading.gif' width='10' height='10' alt='wait...' title='please wait...'/></p>");
+
+			var posting = $.post( url, { comment_text: comment_text,wine_id:wine_id } ).done(function(data) {
+			$("#load-comment").replaceWith(data);
+			$("#comment-text").val('');
+			});
+			
+		}
+		
+		});
+
+		$( "#add-to-wishlist" ).click(function() {
+			var wine_id = $("#comment-input-form").attr('wine_id');
+			var url = "/addtowishlist";
+			$( "#add-to-wishlist" ).replaceWith("<td id = 'add-to-wishlist'><h4 style='display:inline'>Loading..</h4>&nbsp;&nbsp;<img src='/images/loading.gif' width='14' height='14' alt='wait...' title='please wait...'/></td>");
+			var posting = $.post( url, { wine_id:wine_id } ).done(function(data) {
+			$("#add-to-wishlist").replaceWith(data);
+			});
+			
+			/* Send the data using post */
+			/* Put the results in a div */
+		});
+
+});
+
+</script>
+
+<script type="text/javascript" src="js/jquery-1-4-2.min.js"></script>
+<link rel="stylesheet" href="css/slimbox2.css" type="text/css" media="screen" />
+<script type="text/JavaScript" src="js/slimbox2.js"></script>
+
+</head>
+
+<body>
+
+<%- include header.ejs%>
+
+<div id="templatemo_main_wrapper">
+<div id="templatemo_main">
+	<div id="sidebar" class="left">
+    	<div class="sidebar_box"><span class="bottom"></span>
+            <h3>Categories</h3>
+            <div class="content">
+                <ul class="sidebar_list">
+                    <li><a href="#">Nulla odio ipsum</a></li>
+                    <li><a href="#">Suspendisse posuere</a></li>
+                    <li><a href="#">Aliquam euismod</a></li>
+                    <li><a href="#">Curabitur ac mauris</a></li>
+                    <li><a href="#">Mauris nulla tortor</a></li>
+                    <li><a href="#">Nullam ultrices</a></li>
+                    <li><a href="#">Vivamus scelerisque</a></li>
+                    <li><a href="#">Suspendisse posuere</a></li>
+                    <li><a href="#">Quisque vel justo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar_box"><span class="bottom"></span>
+            <h3>Weekly Special</h3>
+            <div class="content special">
+                <img src="images/templatemo_image_01.jpg" alt="Flowers" />
+                <a href="#">Citrus Burst Bouquet</a>
+                <p>
+                	Price:
+                    <span class="price normal_price">$160</span>&nbsp;&nbsp;
+                    <span class="price special_price">$100</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="right">
+      	<h2><%=details[0].wine_name%></h2>
+        <div class="content_half left">
+        	<img src="images/product/image_01.jpg" alt="yellow flowers" />
+        </div>
+            <div class="content_half right">
+                <table>
+                    <tr>
+                        <td width="130">Price:</td>
+                        <td width="84"><%=details[0].price%> /-</td>
+                    </tr>
+                    <tr>
+                        <td width="200">Manufacture Date:</td>
+                        <td width="400"><%=details[0].mnf_date%></td>
+                    </tr>
+                    <tr>
+                        <td width="130">Percentage Alchol:</td>
+                        <td width="84"><%=details[0].per_alc%></td>
+                    </tr>
+                    <tr>
+                        <td width="130">Company:</td>
+                        <td width="84"><%=details[0].company_name%></td>
+                    </tr>
+                    <tr>
+                        <td>Availability:</td>
+                        <td><strong>In Stock</strong></td>
+                    </tr>
+                </table>
+                <div class="cleaner h20"></div>
+
+<% 
+if(user)
+{
+	if(user.user_id&&incart==false) {%>
+				<div id = "result" >
+				<form id = "add_item_form" action="/additem" method="post" wine_id="<%=details[0].wine_id%>">
+		            Quantity &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input name = "quantity" type="number" value="1" size="6" maxlength="2"/>&nbsp; &nbsp; &nbsp;
+					<button type = "submit" style="border:none; cursor:pointer">Add to Cart</button>&nbsp; &nbsp;
+					</form>
+				</div>
+				<br/>
+				<%if(in_wishlist==false) {%>
+				<button id = 'add-to-wishlist' type = 'button' style="border:none; cursor:pointer">Add to Wishlist</button>
+				<%}else{%>
+				<h4><img src = "images/green_good.png"/> Added to <a href = "/wishlist"> wishlist</a><h4>
+				<%}%>
+			
+<%}else if(user.user_id&&incart==true){%>
+<h4><img src = "images/green_good.png"/> Added to <a href = "/shoppingcart"> cart</a><h4>
+
+	<%if(in_wishlist==false) {%>
+	<button id = 'add-to-wishlist' type = 'button' style="border:none; cursor:pointer">Add to Wishlist</button>
+	<%}else{%>
+	<h4><img src = "images/green_good.png"/> Added to <a href = "/wishlist"> wishlist</a><h4>
+	<%}%>
+
+<%}}else{%>
+<h4><a href = "/login">Login </a>to add this item to <a href = "/shoppingcart">cart</a> or <a href = "/wishlist">wishlist</a><h4>
+<%}%>
+
+			</div>
+            <div class="cleaner h40"></div>
+
+            <h4>Product Description</h4>
+            <p><%=details[0].other_info%></p>
+            <h4>comments....</h4>
+            <div id="load-comment"></div>
+			<br/>
+			<div id="do-comment">
+			
+			<div class="content_half left form_field">
+				<form id = "comment-input-form" method="post" action="/addcomment" wine_id=<%=details[0].wine_id%>>
+					<input id = "comment-text" name="comment_text" type = "textarea" rows="1" columns="70" placeholder="your comment here...">
+				</form>
+				</div>
+				
+			</div>
+            
+            <div class="cleaner h40"></div>
+        <div class="blank_box">
+        	<a href="#"><img src="images/free_shipping.jpg" alt="Free Shipping" /></a>
+        </div>
+    </div>
+    <div class="cleaner"></div>
+</div> <!-- END of main -->
+</div> <!-- END of main wrapper -->
+
+<%- include footer.ejs %>
+</div>
+
+<script type='text/javascript' src='js/logging.js'></script>
+</body>
+</html>

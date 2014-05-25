@@ -1,0 +1,44 @@
+<div class="blank_box" id=button>
+<h2>Products</h2>
+        <p>products related to search</p>
+	<% if( items[0].wine_id  > 1) { %>
+	<a href="#" input type="submit" class="button left" onclick="loadXMLDoc(<%=items[0].wine_id%>,'/prev')"><input type="image" src="images/prevlabel.gif"></a>
+	<% } %>
+	<% if( items.length  >= 1 && items.length<8) { %>
+	<br>
+	<br>
+	<% } %>
+</div> 	
+<% if( items.length  > 7) { %>
+	<div class="blank_box" id=button>
+	<a href="#" input type="submit" class="button right" onclick="loadXMLDoc(<%=items[7].wine_id%>,'/next')"><input type="image" src="images/nextlabel.gif"></a>
+	<br>
+	<br>
+	</div>
+<% } %>
+
+<% if( items.length  == 0) { %>
+	<h3>result not found</h3>
+<% } %>
+<% for(var i = 0; i < items.length; ++i) { %>
+  <div class="product_box">
+		<h3><%=items[i].name%></h3>
+            <a href="productdetail.html"><img src="images/product/01.jpg" alt="floral set 1" /></a>
+      		<h3>RS - <%=items[i].price%> INR	</h3>
+	    <meter value=<%=items[i].rate%> min="0" max="5" id="meter"></meter>
+	    <% if( items[i].rate==null) { %>
+	<h3>not rated yet! </h3>
+	<a href="#" input type="submit" class="button left" id="buttto" onclick="loadXMLDoc1(<%=items[i].wine_id%>,<%=items[0].wine_id%>,'/rate')">rate now</a>
+<% } %>
+	 <% if( items[i].rate!=null) { %>
+	<h3><%=items[i].rate%>/5 </h3>
+	<a href="#" input type="submit" class="button left" id="butto" onclick="loadXMLDoc1(<%=items[i].wine_id%>,<%=items[0].wine_id%>,'/rate')">rate now</a>
+
+<% } %>
+            <p class="add_to_cart">
+                <a href="productdetail.html">Detail</a>
+                <a href="shoppingcart.html">Add to Cart</a>
+            </p>
+		
+        </div>
+<% } %>

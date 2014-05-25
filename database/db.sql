@@ -95,7 +95,6 @@ CREATE  TABLE IF NOT EXISTS `wine`.`comments` (
   `user_id` BIGINT NOT NULL ,
   `wine_id` BIGINT NOT NULL ,
   `comment` VARCHAR(200) NULL ,
-  PRIMARY KEY (`user_id`, `wine_id`) ,
   INDEX `fk_comments_wine1_idx` (`wine_id` ASC) ,
   CONSTRAINT `fk_comments_user`
     FOREIGN KEY (`user_id` )
@@ -128,6 +127,7 @@ ENGINE = InnoDB;
 CREATE  TABLE IF NOT EXISTS `wine`.`winery` (
   `winery_id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
+  `street` VARCHAR(100) NULL ,
   `zip` VARCHAR(10) NOT NULL ,
   PRIMARY KEY (`winery_id`, `zip`) ,
   INDEX `fk_winery_location1_idx` (`zip` ASC) ,
@@ -163,9 +163,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wine`.`wish_list`
+-- Table `wine`.`wishlist`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `wine`.`wish_list` (
+CREATE  TABLE IF NOT EXISTS `wine`.`wishlist` (
   `user_id` BIGINT NOT NULL ,
   `wine_id` BIGINT NOT NULL ,
   PRIMARY KEY (`user_id`, `wine_id`) ,
@@ -213,6 +213,14 @@ CREATE  TABLE IF NOT EXISTS `wine`.`orders` (
   `order_id` INT NOT NULL AUTO_INCREMENT ,
   `placed_on` DATETIME NULL ,
   `user_id` BIGINT NOT NULL ,
+  `total_price` INT NULL ,
+  `name` VARCHAR(45) NULL ,
+  `address` VARCHAR(100) NULL ,
+  `city` VARCHAR(45) NULL ,
+  `country` VARCHAR(45) NULL ,
+  `email` VARCHAR(100) NULL ,
+  `contact_no` VARCHAR(100) NULL ,
+  `zip` VARCHAR(10) NULL ,
   PRIMARY KEY (`order_id`, `user_id`) ,
   INDEX `fk_orders_users1_idx` (`user_id` ASC) ,
   CONSTRAINT `fk_orders_users1`
@@ -227,10 +235,9 @@ ENGINE = InnoDB;
 -- Table `wine`.`ordered_items`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `wine`.`ordered_items` (
-  `order_id` INT NOT NULL ,
-  `wine_id` BIGINT NOT NULL ,
+  `order_id` INT NULL ,
+  `wine_id` BIGINT NULL ,
   `quantity` INT NULL ,
-  PRIMARY KEY (`order_id`, `wine_id`) ,
   INDEX `fk_ordered_items_wine1_idx` (`wine_id` ASC) ,
   CONSTRAINT `fk_ordered_items_orders1`
     FOREIGN KEY (`order_id` )
@@ -238,6 +245,44 @@ CREATE  TABLE IF NOT EXISTS `wine`.`ordered_items` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ordered_items_wine1`
+    FOREIGN KEY (`wine_id` )
+    REFERENCES `wine`.`wine` (`wine_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `wine`.`stock`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `wine`.`stock` (
+  `wine_id` BIGINT NOT NULL ,
+  `quantity` INT NULL ,
+  PRIMARY KEY (`wine_id`) ,
+  CONSTRAINT `fk_stock_wine1`
+    FOREIGN KEY (`wine_id` )
+    REFERENCES `wine`.`wine` (`wine_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `wine`.`rate`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `wine`.`rate` (
+  `user_id` BIGINT NOT NULL ,
+  `wine_id` BIGINT NOT NULL ,
+  `rate` INT NULL ,
+  PRIMARY KEY (`user_id`, `wine_id`) ,
+  INDEX `fk_users_has_wine_wine1_idx` (`wine_id` ASC) ,
+  INDEX `fk_users_has_wine_users1_idx` (`user_id` ASC) ,
+  CONSTRAINT `fk_users_has_wine_users1`
+    FOREIGN KEY (`user_id` )
+    REFERENCES `wine`.`users` (`user_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_users_has_wine_wine1`
     FOREIGN KEY (`wine_id` )
     REFERENCES `wine`.`wine` (`wine_id` )
     ON DELETE NO ACTION

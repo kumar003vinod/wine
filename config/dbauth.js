@@ -5,7 +5,9 @@ function NewDatabaseConnection()
 	var new_connection = mysql.createConnection({
 		user: "root",
 		password: "vinod",
-		database: "wine"
+		database: "wine",
+		multipleStatements: "True",
+		dateStrings: "True"
 	});
 
 	new_connection.connect(function(err) {

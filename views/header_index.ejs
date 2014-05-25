@@ -8,6 +8,7 @@
                 <li><a href="/about">About</a></li>
                 <li><a href="/checkout">Checkout</a></li>
                 <li><a href="/contact">Contact</a></li>
+		<li><a href="/products">products</a></li>
                 <li><a href="/faqs">FAQs</a></li>
 				<% if (user) { %>
 				   <li><a href="#">Account</a>
@@ -15,15 +16,15 @@
 		 	               <li><a href="/profile">Profile</a></li>
 	 		               <li><a href="/setting">Setting</a></li>
 	 		               <li><a href="/shoppingcart">Shopping Cart</a></li>
-	 		               <li><a href="/whislist">WhisList</a></li>
- 		               </ul>
+	 		               <li><a href="/wishlist">WhisList</a></li>
+	 		               </ul>
  		           </li>
 				<li><a href="/logout">Logout</a></li> 		           
 				<% } %>
                 
             </ul>
             <div id="templatemo_search">
-                <form action="#" method="get">
+                <form action="/searchs" method="post">
                   	<input type="text" value="Search Wine" name="keyword" id="keyword" title="keyword"
                   			onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
                   	<input type="submit" name="Search" value="" alt="Search" id="searchbutton" title="Search" class="sub_btn" />

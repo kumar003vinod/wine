@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Wine Shopping Cart</title>
+<meta name="keywords" content="free template, shopping cart, floral, ecommerce, online, store" />
+<meta name="description" content="Floral, Shopping Cart, free template for ecommerce websites." />
+<link href="templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="css/orman.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<script type="text/javascript" src="js/ddsmoothmenu.js"></script>
+<script type="text/javascript">
+
+ddsmoothmenu.init({
+	mainmenuid: "templatemo_menu", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	//customtheme: ["#1c5a80", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})
+
+function clearText(field)
+{
+    if (field.defaultValue == field.value) field.value = '';
+    else if (field.value == '') field.value = field.defaultValue;
+}
+
+
+
+function RemoveItem(id)
+{
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	xmlhttp.onreadystatechange=function()
+	{
+
+		document.getElementById("remove-button"+id).innerHTML="<td id = 'loading-image'><img src='/images/loading.gif' width='18' height='18' alt='wait...' title='please wait...'/></td>";
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("item"+id).innerHTML=xmlhttp.responseText;
+		}
+		 
+	 }
+	xmlhttp.open("POST","/removewishlistitem",true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmlhttp.send("id="+id);
+}
+
+</script>
+<script>
+
+
+</script>
+
+
+</head>
+
+<body>
+
+<%- include header.ejs %>
+
+<div id="templatemo_main_wrapper">
+<div id="templatemo_main">
+	<div id="sidebar" class="left">
+    	<div class="sidebar_box"><span class="bottom"></span>
+            <h3>Categories</h3>
+            <div class="content">
+                <ul class="sidebar_list">
+                    <li><a href="#">Nulla odio ipsum</a></li>
+                    <li><a href="#">Suspendisse posuere</a></li>
+                    <li><a href="#">Aliquam euismod</a></li>
+                    <li><a href="#">Curabitur ac mauris</a></li>
+                    <li><a href="#">Mauris nulla tortor</a></li>
+                    <li><a href="#">Nullam ultrices</a></li>
+                    <li><a href="#">Vivamus scelerisque</a></li>
+                    <li><a href="#">Suspendisse posuere</a></li>
+                    <li><a href="#">Quisque vel justo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar_box"><span class="bottom"></span>
+            <h3>Weekly Special</h3>
+            <div class="content special">
+                <img src="images/templatemo_image_01.jpg" alt="Flowers" />
+                <a href="#">Citrus Burst Bouquet</a>
+                <p>
+                	Price:
+                    <span class="price normal_price">$160</span>&nbsp;&nbsp;
+                    <span class="price special_price">$100</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="right">
+    	<h2>Wishlist</h2>
+    	
+	<%if(total_items == 0) { %> 
+	<h4>You have no item in your wishlist.</h4>
+	<%}else{%>
+		<table width="700" border="0" cellpadding="5" cellspacing="0">
+          	<tr bgcolor="#fff">
+                <th width="168" align="left">Item</th>
+                <th width="188" align="left"></th>
+                <th width="80" align="center">Price</th>
+                <th width="80" align="right">Remove</th>
+          	</tr>
+	
+	<% var alltotal = 0;
+	for(var i=0; i < total_items; i++) {
+	alltotal+=items[i].quantity*items[i].price;
+	%>
+            <tr bgcolor="#fff" id = "item<%=items[i].wine_id%>">
+                <td><img src="images/product/01.jpg" alt="flower image 1" /></td>
+                <td><%=items[i].name%></td>
+                <td align="center"><p id="price<%=items[i].wine_id%>" style = "display:inline"><%=items[i].price%></p> /-</td>
+                <td align="right" id = "remove-button<%=items[i].wine_id%>"> <button type = "button" style="background:transparent; border:none; color:transparent; cursor:pointer" onclick = "RemoveItem(<%=items[i].wine_id%>)"" ><img src="images/remove.png" alt="remove"/></button><br />Remove</td>
+            </tr>
+	<%}%>
+	        </table>
+
+        <%}%>
+    </div>
+    <div class="cleaner"></div>
+</div> <!-- END of main -->
+</div> <!-- END of main wrapper -->
+
+<%- include footer.ejs %>
+</div>
+
+<script type='text/javascript' src='js/logging.js'></script>
+</body>
+</html>
